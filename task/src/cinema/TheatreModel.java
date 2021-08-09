@@ -48,10 +48,25 @@ public class TheatreModel {
 class Seats {
     int row;
     int column;
+    int price;
 
     Seats(int row, int column){
         this.row = row + 1;
         this.column = column + 1;
+
+        if (this.row <= 4) {
+            this.price = 10;
+        } else {
+            this.price = 8;
+        }
+    }
+
+    public int getPrice() {
+        return price;
+    }
+
+    public void setPrice(int price) {
+        this.price = price;
     }
 
     public int getRow() {
