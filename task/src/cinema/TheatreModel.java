@@ -1,7 +1,6 @@
 package cinema;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class TheatreModel {
     int total_rows;
@@ -45,6 +44,65 @@ public class TheatreModel {
     }
 }
 
+class MapOfTickets {
+    Map<UUID, Tickets> mapOfTickets;
+
+    public MapOfTickets() {
+        this.mapOfTickets = new HashMap<>();
+    }
+
+    public Map<UUID, Tickets> getMapOfTickets() {
+        return mapOfTickets;
+    }
+
+    public void setMapOfTickets(Map<UUID, Tickets> mapOfTickets) {
+        this.mapOfTickets = mapOfTickets;
+    }
+}
+
+class Tickets {
+    UUID token;
+    Seats ticket;
+
+    public Tickets(UUID token, Seats ticket) {
+        this.token = token;
+        this.ticket = ticket;
+    }
+
+    public UUID getToken() {
+        return token;
+    }
+
+    public void setToken(UUID token) {
+        this.token = token;
+    }
+
+    public Seats getTicket() {
+        return ticket;
+    }
+
+    public void setTicket(Seats ticket) {
+        this.ticket = ticket;
+    }
+}
+
+class ReturnedTickets {
+    Seats returned_ticket;
+
+    public ReturnedTickets(Seats returned_ticket) {
+        this.returned_ticket = returned_ticket;
+    }
+
+    public Seats getReturned_ticket() {
+        return returned_ticket;
+    }
+
+    public void setReturned_ticket(Seats returned_ticket) {
+        this.returned_ticket = returned_ticket;
+    }
+}
+
+
 class Seats {
     int row;
     int column;
@@ -86,3 +144,52 @@ class Seats {
     }
 }
 
+class RequestDataModel {
+    int row;
+    int column;
+
+    public int getRow() {
+        return row;
+    }
+
+    public void setRow(int row) {
+        this.row = row;
+    }
+
+    public int getColumn() {
+        return column;
+    }
+
+    public void setColumn(int column) {
+        this.column = column;
+    }
+}
+
+class RequestTokens {
+    UUID token;
+
+    public UUID getToken() {
+        return token;
+    }
+
+    public void setToken(UUID token) {
+        this.token = token;
+    }
+}
+
+
+class responseMessage {
+    String error;
+
+    public responseMessage(String error) {
+        this.error = error;
+    }
+
+    public String getError() {
+        return error;
+    }
+
+    public void setError(String error) {
+        this.error = error;
+    }
+}
