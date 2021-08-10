@@ -1,22 +1,21 @@
 package cinema;
 
-import io.micrometer.core.instrument.util.JsonUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 import java.util.UUID;
 
 @RestController
 public class SpringController {
 
     TheatreModel model = new TheatreModel();
-    View view = new View();
     MapOfTickets mapOfTicket = new MapOfTickets();
+    Stats stats = new Stats(0,81,0);
+    private final String PASSWORD = "super_secret";
 
     @GetMapping("/seats")
     public TheatreModel getSeats() {
@@ -75,6 +74,41 @@ public class SpringController {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new responseMessage("Wrong token!"));
     }
 
+
+    @PostMapping("/stats")
+    public ResponseEntity<?> getStats(@RequestParam String password) {
+        if(password.equals(PASSWORD)) {
+
+            List<Seats> available_seats = model.getAvailable_seats();
+            int number_of_available_seats = available_seats.size();
+
+            int number_of_purchased_tickets = mapOfTicket.getMapOfTickets().size();
+
+            int current_income = 0;
+
+            for (UUID uuid : mapOfTicket.getMapOfTickets().keySet()) {
+                current_income = current_income + mapOfTicket.getMapOfTickets().get(uuid).ticket.getPrice();
+            }
+
+            stats.setCurrent_income(current_income);
+            stats.setNumber_of_available_seats(number_of_available_seats);
+            stats.setNumber_of_purchased_tickets(number_of_purchased_tickets);
+
+            return ResponseEntity.status(HttpStatus.OK).body(stats);
+        }
+
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new responseMessage("The password is wrong!"));
+    }
+
+
+    @ExceptionHandler(MissingServletRequestParameterException.class)
+    public ResponseEntity<responseMessage> handleMissingParams(MissingServletRequestParameterException ex) {
+        //String name = ex.getParameterName();
+        //System.out.println(name + " parameter is missing");
+        // Actual exception handling
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new responseMessage("The password is wrong!"));
+
+    }
 
     public void printData(int row, int column, String ops) {
         System.out.println("row : " + row);
