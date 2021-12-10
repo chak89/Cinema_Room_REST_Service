@@ -6,8 +6,9 @@
 * [Setup](#setup)
 
 ## General info
-Spring REST service that will help you manage a small movie theatre. Handle HTTP requests in controllers, create services and respond with JSON objects.
-REST service that can show the available seats, sell and refund tickets, and display the statistics of your venue.
+Spring REST service that will help you manage a small movie theatre. Handle HTTP requests in controllers, create services and respond with JSON objects.  
+REST service that can show the available seats, sell and refund tickets, and display the statistics of your venue.  
+https://hyperskill.org/projects/189
 	
 ## Technologies
 Project is created with:
